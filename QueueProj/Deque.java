@@ -1,8 +1,14 @@
 import java.util.Iterator;
+
 import edu.princeton.cs.algs4.StdIn;
 import edu.princeton.cs.algs4.StdOut;
 
 public class Deque<Item> implements Iterable<Item> {
+    /* doubly linked list node */
+    private final Node head;
+    private Node tail;
+    private int size;
+
     private class Node {
         Node pre;
         Node next;
@@ -19,6 +25,7 @@ public class Deque<Item> implements Iterable<Item> {
         }
     }
 
+    /* dequeue iterator */
     private class DequeIter implements Iterator<Item> {
         public Node current = head.next;
 
@@ -29,15 +36,20 @@ public class Deque<Item> implements Iterable<Item> {
 
         @Override
         public Item next() {
+            if (!hasNext()) {
+                throw new java.util.NoSuchElementException("No more elem in iterator!");
+            }
             Item elem = current.elem;
             current = current.next;
             return elem;
         }
+
+        @Override
+        public void remove() {
+            throw new java.lang.UnsupportedOperationException("deque iter doesn't support remove operation!");
+        }
     }
 
-    private Node head;
-    private Node tail;
-    private int size;
 
     /* store data in a doubly linked list with a sentinel node */
     public Deque() {
@@ -108,19 +120,19 @@ public class Deque<Item> implements Iterable<Item> {
 
     public static void main(String[] args) {
         Deque<Integer> deque = new Deque<>();
-        while(!StdIn.isEmpty()){
+        while (!StdIn.isEmpty()) {
             deque.addFirst(StdIn.readInt());
-            if(!StdIn.isEmpty())
-            deque.addLast(StdIn.readInt());
+            if (!StdIn.isEmpty())
+                deque.addLast(StdIn.readInt());
         }
         deque.removeFirst();
         deque.removeLast();
         StdOut.println(deque.size());
-        for(int i:deque){
-            StdOut.print(i+" ");
+        for (int i : deque) {
+            StdOut.print(i + " ");
         }
         StdOut.println();
-        while(!deque.isEmpty()) deque.removeLast();
+        while (!deque.isEmpty()) deque.removeLast();
         StdOut.println(deque.size());
     }
 }

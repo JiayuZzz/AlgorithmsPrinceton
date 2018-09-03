@@ -1,1 +1,1 @@
-# This is projects of Princeton's Algorithm
+# Projects of Princeton's Algorithms
